@@ -1,28 +1,24 @@
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-from django.http import HttpResponseRedirect
 from django.http import HttpResponse
-from django.http import JsonResponse
-from django.core.files import File
-from django.core.exceptions import ObjectDoesNotExist
-from django.core import serializers
-
-import cx_Oracle
+from django.db import connection
 
 from .models import *
 
+def executeSQL(sql_string):
+	cursor = connection.cursor()
+	cursor.execute(sql_string)
+	return (cursor.fetchall())
+
 # Create your views here.
 def Test(request):
-	ip = 'grad.icmc.usp.br'
-	port = 15214
-	SID = 'orcl14'
-	dsn_tns = cx_Oracle.makedsn(ip, port, SID)
-
-	con = cx_Oracle.connect('gt2', 'gt2', dsn_tns)
-
-
-	html = "<html><body>It is now {}.</body></html>".format(con.version)
+	
+	sql_string = request.GET.get('query')
+	print(sql_string)
+	result = executeSQL(sql_string)
+	print(result)
+	html = "<html><body>{}</body></html>".format(result)
 	return HttpResponse(html)
+
+
 
 
 #(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.0.171)(PORT = 1521))

@@ -60,12 +60,14 @@ WSGI_APPLICATION = 'Proj_LabDB.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.path.join(BASE_DIR, 'db.oracle'),
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': 'orcl14',
+        'USER': 'gt2',
+        'PASSWORD': 'gt2',
+        'HOST': 'grad.icmc.usp.br',
+        'PORT': '15214',
     }
 }
-
-DATABASES['default'] =  dj_database_url.config()
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
