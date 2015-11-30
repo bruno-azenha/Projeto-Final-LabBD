@@ -1,4 +1,7 @@
-from django.http import HttpResponse
+# from django.http import HttpResponse
+from django.template import RequestContext
+from django.shortcuts import render_to_response
+
 from django.db import connection
 
 from .models import *
@@ -10,13 +13,16 @@ def executeSQL(sql_string):
 
 # Create your views here.
 def Test(request):
-	
 	sql_string = request.GET.get('query')
 	print(sql_string)
 	result = executeSQL(sql_string)
 	print(result)
-	html = "<html><body>{}</body></html>".format(result)
-	return HttpResponse(html)
+
+	return render_to_response(
+		'index.html',
+		{'query_result': result},
+		context_instance=RequestContext(request)
+	)
 
 
 
