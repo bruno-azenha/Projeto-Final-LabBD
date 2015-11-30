@@ -12,15 +12,18 @@ def executeSQL(sql_string):
 	return (cursor.fetchall())
 
 # Create your views here.
-def Test(request):
-	sql_string = request.GET.get('query')
-	print(sql_string)
-	result = executeSQL(sql_string)
-	print(result)
+def LandingPage(request):
 
 	return render_to_response(
 		'index.html',
-		{'query_result': result},
+		{},
+		context_instance=RequestContext(request)
+	)
+
+def Pedidos(request):
+	return render_to_response(
+		'pedidos.html',
+		{},
 		context_instance=RequestContext(request)
 	)
 
