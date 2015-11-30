@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.http import JsonResponse
 from django.core.files import File
 from django.core.exceptions import ObjectDoesNotExist
@@ -12,8 +13,8 @@ from .models import *
 
 # Create your views here.
 def Test(request):
-	ip = '192.168.183.14'
-	port = 1521
+	ip = 'grad.icmc.usp.br'
+	port = 15214
 	SID = 'orcl14'
 	dsn_tns = cx_Oracle.makedsn(ip, port, SID)
 
