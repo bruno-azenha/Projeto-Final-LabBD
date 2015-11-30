@@ -55,8 +55,29 @@
 
 		<!-- Jumbotron -->
 		<div class="jumbotron">
-			<h1>PEDIDOS</h1>
-			<p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
+			<div class="row">
+				<div class="col-sm-8">
+					<h1>Olá Amy</h1>
+					<p><a class="btn btn-primary" href="#" role="button">Novo Pedido</a></p>
+				</div>
+				<div class="col-sm-4">
+					<form action="{% url 'pedidos' %}" method="POST">
+						{% csrf_token %}
+						<select name="vendedor_id">
+							{% for v in vendedores_list %}
+							<option value="{{ v.id }}">{{ v.nome }}</option>
+							{% endfor %}
+							<option value="web">Compra Web</option>
+						</select>
+						<input type="submit" class="btn btn-xs btn-success" role="button" value="Filtrar Por Vendedor"/>
+					</form>
+				</div>
+			</div>
+			{% if self %}
+				<p class="lead">Esses são os pedidos pelos quais você é responsável.</p>
+			{% else %}
+				<p class="lead">Esses pedidos são responsabilidade de outro vendedor.</p>
+			{% endif %}
 
 			<div class="row">
 				<ul>
@@ -81,8 +102,6 @@
 				{% endfor %}
 				</ul>
 			</div>
-
-			<p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>
 		</div>
 
 			<!-- Site footer -->

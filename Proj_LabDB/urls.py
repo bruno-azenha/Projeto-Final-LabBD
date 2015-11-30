@@ -9,5 +9,5 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', LandingPage, name="landing_page"),
-    url(r'^pedidos/', Pedidos, name="pedidos"),
+    url(r'^pedidos/$', Pedidos, name="pedidos"),
 )
