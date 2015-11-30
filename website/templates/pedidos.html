@@ -10,7 +10,7 @@
 		<meta name="author" content="">
 		<link rel="icon" href="../../favicon.ico">
 
-		<title>Justified Nav Template for Bootstrap</title>
+		<title>Projeto Final LabBD</title>
 
 		<!-- Bootstrap core CSS -->
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -57,7 +57,31 @@
 		<div class="jumbotron">
 			<h1>PEDIDOS</h1>
 			<p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
-			<p> {{ query__result }}</p>
+
+			<div class="row">
+				<ul>
+				{% for pedido in pedidos_list %}
+					<li style="list-style-type: none;">
+						<div class="col-sm-2">
+							{{ pedido.id }}
+						</div>
+						<div class="col-sm-3">
+							{{ pedido.cliente }}
+						</div>
+						<div class="col-sm-3">
+							{{ pedido.data }}
+						</div>
+						<div class="col-sm-4">
+							<a class="btn btn-xs btn-success" href="#" role="button">Visualizar</a>
+							<a class="btn btn-xs btn-warning" href="#" role="button">Editar</a>
+							<a class="btn btn-xs btn-danger" href="#" role="button">Excluir</a>
+						</div>
+					</li>
+
+				{% endfor %}
+				</ul>
+			</div>
+
 			<p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>
 		</div>
 

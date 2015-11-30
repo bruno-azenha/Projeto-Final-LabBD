@@ -3,6 +3,7 @@ argparse==1.2.1
 cx-Oracle==5.2
 dj-database-url==0.3.0
 dj-static==0.0.6
+django-bootstrap-form==3.2
 django-toolbelt==0.0.1
 gunicorn==19.4.1
 psycopg2==2.6.1
