@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -36,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'website'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -58,14 +60,12 @@ WSGI_APPLICATION = 'Proj_LabDB.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.oracle',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.path.join(BASE_DIR, 'db.oracle'),
-        'USER': 'gt2',
-        'PASSWORD': 'gt2',
-        'HOST': '192.168.183.14',
-        'PORT': '5432',
     }
 }
+
+DATABASES['default'] =  dj_database_url.config()
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -83,5 +83,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-
+STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
+
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
