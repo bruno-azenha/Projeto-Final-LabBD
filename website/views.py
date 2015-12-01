@@ -84,7 +84,7 @@ def CreatePedido(request):
 			key = int(executeQuery(query, False)[0]) + 1
 
 			attributes = '(codigo'
-			values = '(' + key
+			values = '({}'.format(key)
 			dtpedido = "to_timestamp('{:%Y-%m-%d}', 'YYYY-MM-DD')".format(datetime.datetime.now())
 			dtenvio = dtpedido
 			dtrecebimento = dtpedido
@@ -92,7 +92,7 @@ def CreatePedido(request):
 			values += ", {0}, {1}, {2}".format(dtpedido, dtenvio, dtrecebimento)
 
 			codigocliente = form.cleaned_data['codigocliente']
-			if codigoclient != None:
+			if codigocliente != None:
 				attributes += ', codigocliente'
 				values += ", {0}".format(codigocliente)
 
