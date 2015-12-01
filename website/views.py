@@ -13,10 +13,10 @@ from .models import *
 def executeQuery(sql_string, fetchAll):
 	cursor = connection.cursor()
 	cursor.execute(sql_string)
-	if fetchAll:
-		return (cursor.fetchall())
-	else:
-		return (cursor.fetchone())
+	
+	result = cursor.fetchall() if fetchAll else cursor.fetchone()
+	cursor.close()
+	return result
 
 def executeSQL(sql_string):
 	cursor = connection.cursor()
@@ -83,21 +83,61 @@ def CreatePedido(request):
 			query = "SELECT codigo FROM Pedido ORDER BY codigo DESC"
 			key = int(executeQuery(query, False)[0]) + 1
 
-			print("Last Key: {}".format(key))
+			attributes = '(codigo'
+			values = '(' + key
 			dtpedido = "to_timestamp('{:%Y-%m-%d}', 'YYYY-MM-DD')".format(datetime.datetime.now())
 			dtenvio = dtpedido
 			dtrecebimento = dtpedido
-			codigocliente = form.cleaned_data['codigocliente']
-			contacliente = form.cleaned_data['contacliente']
-			numerocartaocredito = form.cleaned_data['numerocartaocredito']
-			codigoconfirmacao = form.cleaned_data['codigoconfirmacao']
-			codigovendedor = 287
-			imposto = form.cleaned_data['imposto']
-			enderecofatura = form.cleaned_data['enderecofatura']
-			enderecoentrega = form.cleaned_data['enderecoentrega']
-			codigotransportadora = form.cleaned_data['codigotransportadora']
+			attributes += ', dtpedido, dtenvio, dtrecebimento'
+			values += ", {0}, {1}, {2}".format(dtpedido, dtenvio, dtrecebimento)
 
-			query = "INSERT INTO Pedido (codigo, dtpedido, dtenvio, dtrecebimento, codigocliente, contacliente, numerocartaocredito, codigoconfirmacao, codigovendedor, imposto, enderecofatura, enderecoentrega, codigotransportadora) values ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10} ,{11} ,{12})".format(key, dtpedido, dtenvio, dtrecebimento, codigocliente, contacliente, numerocartaocredito, codigoconfirmacao, codigovendedor, imposto, enderecofatura, enderecoentrega, codigotransportadora)
+			codigocliente = form.cleaned_data['codigocliente']
+			if codigoclient != None:
+				attributes += ', codigocliente'
+				values += ", {0}".format(codigocliente)
+
+			contacliente = form.cleaned_data['contacliente']
+			if contacliente != None:
+				attributes += ', contacliente'
+				values += ", '{0}'".format(contacliente)
+			
+			numerocartaocredito = form.cleaned_data['numerocartaocredito']
+			if numerocartaocredito != None:
+				attributes += ', numerocartaocredito'
+				values += ", {0}".format(numerocartaocredito)
+
+			codigoconfirmacao = form.cleaned_data['codigoconfirmacao']
+			if codigoconfirmacao != None:
+				attributes += ', codigoconfirmacao'
+				values += ", '{0}'".format(codigoconfirmacao)
+
+			codigovendedor = 287
+			attributes += ', codigovendedor'
+			values += ", '{0}'".format(codigovendedor)
+
+			imposto = form.cleaned_data['imposto']
+			if imposto != None:
+				attributes += ', imposto'
+				values += ", '{0}'".format(imposto)
+
+			enderecofatura = form.cleaned_data['enderecofatura']
+			if enderecofatura != None:
+				attributes += ', enderecofatura'
+				values += ", '{0}'".format(enderecofatura)
+
+			enderecoentrega = form.cleaned_data['enderecoentrega']
+			if enderecoentrega != None:
+				attributes += ', enderecoentrega'
+				values += ", '{0}'".format(enderecoentrega)
+
+			codigotransportadora = form.cleaned_data['codigotransportadora']
+			if codigotransportadora != None:
+				attributes += ', codigotransportadora'
+				values += ", '{0}'".format(codigotransportadora)
+
+			attributes += ')'
+			values += ")".format(codigotransportadora)
+			query = "INSERT INTO Pedido {0} values {1}".format(attributes, values)
 			print(query)
 			executeSQL(query)
 
@@ -127,8 +167,10 @@ def ShowPedido(request):
 		data['pedido_id'] = pedido[0][0]
 		data['dtpedido'] = pedido[0][1]
 		data['dtenvio'] = pedido[0][2] 
-		data['dtrecebimento'] = pedido[0][3] 
-		data['codigocliente'] = pedido[0][4] 
+		data['dtrecebimento'] = pedido[0][3]
+
+		cliente = executeQuery("SELECT ( PRIMEIRONOME || ' ' || NOMEDOMEIO || ' ' || SOBRENOME ) as cliente FROM Cliente WHERE codigo = {}".format(pedido[0][4]), 0)
+		data['cliente'] = cliente[0]
 		data['contacliente'] = pedido[0][5] 
 		data['numerocartaocredito'] = pedido[0][6] 
 		data['codigoconfirmacao'] = pedido[0][7] 
