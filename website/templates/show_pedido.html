@@ -16,7 +16,6 @@
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.js"></script>
 
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 		<link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -58,56 +57,29 @@
 		<!-- Jumbotron -->
 		<div class="jumbotron">
 			<div class="row">
-				<div class="col-sm-8">
-					<h1>Olá Amy</h1>
-					<p><a class="btn btn-primary" href="{% url 'create_pedido' %}" role="button">Novo Pedido</a></p>
-				</div>
-				<div class="col-sm-4">
-					<form action="{% url 'pedidos' %}" method="POST">
-						{% csrf_token %}
-						<select name="vendedor_id">
-							{% for v in vendedores_list %}
-							<option value="{{ v.id }}">{{ v.nome }}</option>
-							{% endfor %}
-							<option value="web">Compra Web</option>
-						</select>
-						<input type="submit" class="btn btn-xs btn-success" role="button" value="Filtrar Por Vendedor"/>
-					</form>
-				</div>
+				<h1>Visualizar Pedido</h1>
 			</div>
-			{% if self %}
-				<p class="lead">Esses são os pedidos pelos quais você é responsável.</p>
-			{% else %}
-				<p class="lead">Esses pedidos são responsabilidade de outro vendedor.</p>
-			{% endif %}
 
 			<div class="row">
-				<ul>
-				{% for pedido in pedidos_list %}
-					<li style="list-style-type: none;">
-						<div class="col-sm-2">
-							{{ pedido.id }}
-						</div>
-						<div class="col-sm-3">
-							{{ pedido.cliente }}
-						</div>
-						<div class="col-sm-3">
-							{{ pedido.data }}
-						</div>
-						<div class="col-sm-4">
-							<a class="btn btn-xs btn-success" href="{% url 'show_pedido' %}?pedido_id={{pedido.id}}" role="button">Visualizar</a>
-							{% if self %}
-							<a class="btn btn-xs btn-warning" href="#" role="button">Editar</a>
-							<a class="btn btn-xs btn-danger" href="#" role="button">Excluir</a>
-							{% else %}
-							<a class="btn btn-xs btn-disabled" href="" role="button">Editar</a>
-							<a class="btn btn-xs btn-disabled" href="" role="button">Excluir</a>
-							{% endif %}
-						</div>
-					</li>
-
-				{% endfor %}
-				</ul>
+				
+				Data do Pedido: {{ data.dtpedido }}
+				Data de Envio: {{ data.dtenvio }}
+				Data de Recebimento: {{ data.dtrecebimento }}
+				Código do Cliente{{ data.codigocliente }}
+				Cpnta do Cliente {{ data.contacliente }}
+				Cartão de Crédito {{ data.numerocartaocredito }}
+				Código de Confirmação {{ data.codigoconfirmacao }}
+				Código do Vendedor {{ data.codigovendedor }}
+				Impostos {{ data.imposto }}
+				Endereço de Fatura {{ data.enderecofatura }}
+				Endereço de Entrega {{ data.enderecoentrega }}
+				Código da Transportadora {{ data.codigotransportadora }}
+				<div class="col-sm-12">
+					<a class="btn btn-lg btn-warning" href="{% url 'update_pedido'%}?pedido_id={{data.pedido_id}}"/>Editar</a>
+					<a class="btn btn-lg btn-danger" href="{% url 'delete_pedido'%}"/>DELETAR</a>
+				</div>
+					
+				</form>
 			</div>
 		</div>
 
