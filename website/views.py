@@ -178,10 +178,12 @@ def ShowPedido(request):
 		data['imposto'] = pedido[0][9] 
 		data['enderecofatura'] = pedido[0][10]
 		data['enderecoentrega'] = pedido[0][11] 
-		data['codigotransportadora'] = pedido[0][12]		
+		data['codigotransportadora'] = pedido[0][12]
+
+		self = True if data['codigovendedor'] == 287 else False
 
 		return render_to_response(
-			'show_pedido.html', {'data': data},
+			'show_pedido.html', {'data': data, 'self': self},
 			context_instance=RequestContext(request)
 	)
 

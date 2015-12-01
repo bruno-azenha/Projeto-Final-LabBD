@@ -62,22 +62,34 @@
 
 			<div class="row">
 				<ul>
-					<li>Data do Pedido: {{ data.dtpedido }}</li>
-					<li>Data de Envio: {{ data.dtenvio }}</li>
-					<li>Data de Recebimento: {{ data.dtrecebimento }}</li>
-					<li>Cliente: {{ data.cliente }}</li>
-					<li>Conta do Cliente: {{ data.contacliente }}</li>
-					<li>Cartão de Crédito: {{ data.numerocartaocredito }}</li>
-					<li>Código de Confirmação: {{ data.codigoconfirmacao }}</li>
-					<li>Código do Vendedor: {{ data.codigovendedor }}</li>
-					<li>Impostos: {{ data.imposto }}</li>
-					<li>Endereço de Fatura: {{ data.enderecofatura }}</li>
-					<li>Endereço de Entrega: {{ data.enderecoentrega }}</li>
-					<li>Código da Transportadora: {{ data.codigotransportadora }}</li>
+					<div class="col-sm-6">
+						<li>Data do Pedido: {{ data.dtpedido }}</li>
+						<li>Data de Envio: {{ data.dtenvio }}</li>
+						<li>Data de Recebimento: {{ data.dtrecebimento }}</li>
+						<li>Cliente: {{ data.cliente }}</li>
+						<li>Conta do Cliente: {{ data.contacliente }}</li>
+						<li>Cartão de Crédito: {{ data.numerocartaocredito }}</li>
+					</div>
+					<div class="col-sm-6">
+						<li>Código de Confirmação: {{ data.codigoconfirmacao }}</li>
+						<li>Código do Vendedor: {{ data.codigovendedor }}</li>
+						<li>Impostos: {{ data.imposto }}</li>
+						<li>Endereço de Fatura: {{ data.enderecofatura }}</li>
+						<li>Endereço de Entrega: {{ data.enderecoentrega }}</li>
+						<li>Código da Transportadora: {{ data.codigotransportadora }}</li>
+					</div>
 				</ul>
+			</div>
+			<div class="row">
 				<div class="col-sm-12">
-					<a class="btn btn-lg btn-warning" href="{% url 'update_pedido'%}?pedido_id={{data.pedido_id}}"/>Editar</a>
-					<a class="btn btn-lg btn-danger" href="{% url 'delete_pedido'%}"/>DELETAR</a>
+					{% if self %}
+					<a class="btn btn-lg btn-warning" href="{% url 'update_pedido' %}?pedido_id={{data.pedido_id}}" role="button">Editar</a>
+					<a class="btn btn-lg btn-danger" href="{% url 'delete_pedido' %}?pedido_id={{data.pedido_id}}" role="button">DELETAR</a>
+					{% else %}
+					<a class="btn btn-lg btn-warning" disabled href="#" role="button">Editar</a>
+					<a class="btn btn-lg btn-danger" disabled href="#" role="button">DELETAR</a>
+					<b>Esse Pedido não é seu, você não pode editá-lo.</b>
+					{% endif %}
 				</div>
 					
 				</form>
