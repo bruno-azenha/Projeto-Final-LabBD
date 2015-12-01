@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 from django import forms
+from bootstrap3_datetime.widgets import DateTimePicker
 
 class PedidoForm(forms.Form):
-	dtpedido = forms.DateField(label='Data do Pedido', required=True)
-	dtenvio = forms.DateField(label='Data de Envio')
-	dtrecebimento = forms.DateField(label='Data de Recebimento')
+	dtenvio = forms.DateTimeField(label='Data de Envio', required=False, widget=DateTimePicker(options={"format": "YYYY-MM-DD", "pickTime": True}))
+	dtrecebimento = forms.DateTimeField(label='Data de Recebimento', required=False, widget=DateTimePicker(options={"format": "YYYY-MM-DD", "pickTime": True}))
 	codigocliente = forms.IntegerField(label='Código Cliente', required=True)
-	contacliente = forms.CharField(label='Conta Cliente', max_length=15)
-	numerocartaocredito = forms.IntegerField(label='Cartão')
-	codigoconfirmacao = forms.CharField(label='Código de Confirmação', max_length=15)
-	codigovendedor = forms.IntegerField(label='Código Vendedor')
-	imposto = forms.IntegerField(label='Imposto')
-	enderecofatura = forms.IntegerField(label='Endereço de Fatura')
-	enderecoentrega = forms.IntegerField(label='Endereço de Entrega')
-	codigotransportadora = forms.IntegerField(label='Código da Transportadora')
-
+	contacliente = forms.CharField(label='Conta Cliente', required=False, max_length=15)
+	numerocartaocredito = forms.IntegerField(label='Cartão', required=False)
+	codigoconfirmacao = forms.CharField(label='Código de Confirmação', required=False, max_length=15)
+	codigovendedor = forms.IntegerField(label='Código Vendedor', required=False)
+	imposto = forms.FloatField(label='Imposto', required=False)
+	enderecofatura = forms.IntegerField(label='Endereço de Fatura', required=False)
+	enderecoentrega = forms.IntegerField(label='Endereço de Entrega', required=False)
+	codigotransportadora = forms.IntegerField(label='Código da Transportadora', required=False)

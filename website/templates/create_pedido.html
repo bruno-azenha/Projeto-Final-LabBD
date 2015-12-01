@@ -16,7 +16,6 @@
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.js"></script>
 
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 		<link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -58,51 +57,33 @@
 		<!-- Jumbotron -->
 		<div class="jumbotron">
 			<div class="row">
-				<div class="col-sm-8">
-					<h1>Olá Amy</h1>
-					<p><a class="btn btn-primary" href="{% url 'create_pedido' %}" role="button">Novo Pedido</a></p>
-				</div>
-				<div class="col-sm-4">
-					<form action="{% url 'pedidos' %}" method="POST">
-						{% csrf_token %}
-						<select name="vendedor_id">
-							{% for v in vendedores_list %}
-							<option value="{{ v.id }}">{{ v.nome }}</option>
-							{% endfor %}
-							<option value="web">Compra Web</option>
-						</select>
-						<input type="submit" class="btn btn-xs btn-success" role="button" value="Filtrar Por Vendedor"/>
-					</form>
-				</div>
+				<h1>Olá Amy</h1>
 			</div>
-			{% if self %}
-				<p class="lead">Esses são os pedidos pelos quais você é responsável.</p>
-			{% else %}
-				<p class="lead">Esses pedidos são responsabilidade de outro vendedor.</p>
-			{% endif %}
 
 			<div class="row">
-				<ul>
-				{% for pedido in pedidos_list %}
-					<li style="list-style-type: none;">
-						<div class="col-sm-2">
-							{{ pedido.id }}
-						</div>
-						<div class="col-sm-3">
-							{{ pedido.cliente }}
-						</div>
-						<div class="col-sm-3">
-							{{ pedido.data }}
-						</div>
-						<div class="col-sm-4">
-							<a class="btn btn-xs btn-success" href="#" role="button">Visualizar</a>
-							<a class="btn btn-xs btn-warning" href="#" role="button">Editar</a>
-							<a class="btn btn-xs btn-danger" href="#" role="button">Excluir</a>
-						</div>
-					</li>
+				{% load bootstrap %}
+				<form action="{% url 'create_pedido' %}" method="POST">
+					{% csrf_token %}
+					<div class="col-sm-6">
+						{{ form.codigocliente|bootstrap }}
+						{{ form.numerocartaocredito|bootstrap }}
+						{{ form.codigoconfirmacao|bootstrap }}
+						{{ form.enderecofatura|bootstrap }}
+						{{ form.enderecoentrega|bootstrap }}
+					</div>
+					<div class="col-sm-6">
+						{{ form.dtenvio|bootstrap }}
+						{{ form.contacliente|bootstrap }}
+						{{ form.codigovendedor|bootstrap }}
+						{{ form.imposto|bootstrap }}
+						{{ form.codigotransportadora|bootstrap }}
+					</div>
 
-				{% endfor %}
-				</ul>
+					<div class="col-sm-12">
+						<input class="btn btn-lg btn-primary" type="submit" value="Cadastrar"/>
+					</div>
+					
+				</form>
 			</div>
 		</div>
 

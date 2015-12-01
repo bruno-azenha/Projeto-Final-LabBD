@@ -10,4 +10,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', LandingPage, name="landing_page"),
     url(r'^pedidos/$', Pedidos, name="pedidos"),
+    url(r'^pedidos/new', CreatePedido, name="create_pedido"),
+    url(r'^pedidos/success', Success, name="success"),
+    url(r'^pedidos/fail', Fail, name="fail"),
 )
