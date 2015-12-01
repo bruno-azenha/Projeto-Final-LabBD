@@ -30,3 +30,11 @@ class PedidoForm(forms.Form):
 class DataRangeForm(forms.Form):
 	dtinicio = forms.DateTimeField(label='Data Inicial', required=False, widget=DateTimePicker(options={"format": "YYYY-MM-DD", "pickTime": True}))
 	dtfim = forms.DateTimeField(label='Data Final', required=False, widget=DateTimePicker(options={"format": "YYYY-MM-DD", "pickTime": True}))
+
+class ClienteForm(forms.Form):
+	tratamento = forms.CharField(label='Tratamento', required=False, max_length=8)
+	primeironome = forms.CharField(label='Primeiro Nome', required=True, max_length=50)
+	nomedomeio = forms.CharField(label='Nome do Meio', required=False, max_length=50)
+	sobrenome = forms.CharField(label='Sobrenome', required=True, max_length=50)
+	sufixo = forms.CharField(label='Sufixo', required=False, max_length=10)
+	senha = forms.CharField(label='Senha', required=True, max_length=128)

@@ -1,6 +1,7 @@
 # from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
 from django.db import connection
@@ -141,10 +142,10 @@ def CreatePedido(request):
 			print(query)
 			executeSQL(query)
 
-			return HttpResponseRedirect('/pedidos/success')
+			return HttpResponseRedirect(reverse('success'))
 
 		else:
-			return HttpResponseRedirect('/pedidos/fail')
+			return HttpResponseRedirect(reverse('fail'))
 
 	else:
 		form = PedidoForm()
@@ -252,10 +253,10 @@ def UpdatePedido(request):
 			print(query)
 			executeSQL(query)
 
-			return HttpResponseRedirect('/pedidos/success')
+			return HttpResponseRedirect(reverse('success'))
 
 		else:
-			return HttpResponseRedirect('/pedidos/fail')
+			return HttpResponseRedirect(reverse('fail'))
 
 
 
@@ -361,7 +362,67 @@ def AvaliacaoVendedor(request):
 				'fail.html', {},
 				context_instance=RequestContext(request))
 
+def CreateCliente(request):
 
+	if request.method == 'POST':
+		form = ClienteForm(request.POST)
+		# check whether it's valid:
 
+		if form.is_valid():
 
-	
+			# Discovers the last pk
+			query = "SELECT codigo FROM Cliente ORDER BY codigo DESC"
+			key = int(executeQuery(query, False)[0]) + 1
+
+			attributes = '(codigo'
+			values = '({}'.format(key)
+
+			tratamento = form.cleaned_data['tratamento']
+			if tratamento != None:
+				attributes += ', tratamento'
+				values += ", '{0}'".format(tratamento)
+			
+			primeironome = form.cleaned_data['primeironome']
+			if primeironome != None:
+				attributes += ', primeironome'
+				values += ", '{0}'".format(primeironome)
+
+			nomedomeio = form.cleaned_data['nomedomeio']
+			if nomedomeio != None:
+				attributes += ', nomedomeio'
+				values += ", '{0}'".format(nomedomeio)
+
+			sobrenome = form.cleaned_data['sobrenome']
+			if sobrenome != None:
+				attributes += ', sobrenome'
+				values += ", '{0}'".format(sobrenome)
+
+			sufixo = form.cleaned_data['sufixo']
+			if sufixo != None:
+				attributes += ', sufixo'
+				values += ", '{0}'".format(sufixo)
+
+			senha = form.cleaned_data['senha']
+			if senha != None:
+				attributes += ', senha'
+				values += ", '{0}'".format(senha)
+
+			attributes += ')'
+			values += ')'
+			query = "INSERT INTO Cliente {0} values {1}".format(attributes, values)
+			print(query)
+			executeSQL(query)
+
+			return HttpResponseRedirect(reverse('success'))
+
+		else:
+			return HttpResponseRedirect(reverse('fail'))
+
+	else:
+		form = ClienteForm()
+
+	return render_to_response(
+		'create_cliente.html',
+		{'form': form},
+		context_instance=RequestContext(request)
+	)

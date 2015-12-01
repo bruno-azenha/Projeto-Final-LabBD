@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^pedidos/delete', DeletePedido, name="delete_pedido"),
     url(r'^pedidos/success', Success, name="success"),
     url(r'^pedidos/fail', Fail, name="fail"),
+    url(r'^clientes/create', CreateCliente, name="create_cliente"),
     url(r'^melhores-clientes/', MelhoresClientes, name="melhores-clientes"),
     url(r'^avaliacao-vendedor/', AvaliacaoVendedor, name="avaliacao-vendedor"),
 

@@ -65,7 +65,13 @@
 				<form action="{% url 'create_pedido' %}" method="POST">
 					{% csrf_token %}
 					<div class="col-sm-6">
-						{{ form.codigocliente|bootstrap }}
+						<div class="row">
+							<div class="col-sm-8">
+								{{ form.codigocliente|bootstrap }}
+							</div>
+							<a class="btn btn-xs btn-info col-sm-offset-1 col-sm-3 " href="{% url 'create_cliente' %}" role="button">Novo Cliente</a>
+						</div>
+						
 						{{ form.numerocartaocredito|bootstrap }}
 						{{ form.codigoconfirmacao|bootstrap }}
 						{{ form.enderecofatura|bootstrap }}
