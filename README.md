@@ -13,7 +13,7 @@ python 2.7
 
 na raíz do projeto:
 
-    user@pc:raiz$virtualenv env
+    user@pc:virtualenv env
     user@pc:source env/bin/activate
     user@pc:raiz$pip install -r requirements.txt
     user@pc:raiz$python manage.py runserver
