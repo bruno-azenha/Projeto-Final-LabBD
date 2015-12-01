@@ -282,3 +282,15 @@ def Fail(request):
 		'fail.html', {},
 		context_instance=RequestContext(request)
 	)
+
+def MelhoresClientes(request):
+	return render_to_response(
+		'melhores-clientes.html', {},
+		context_instance=RequestContext(request)
+	)
+
+def AvaliacaoVendedor(request):
+	return render_to_response(
+		'avaliacao-vendedor.html', {},
+		context_instance=RequestContext(request)
+	)

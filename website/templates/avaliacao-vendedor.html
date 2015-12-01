@@ -44,8 +44,8 @@
 			<h3 class="text-muted">Projeto Final - Laboratório de Base de Dados</h3>
 			<nav>
 			<ul class="nav nav-justified">
-				<li class="active"><a href="#">Home</a></li>
-				<li><a href="{% url 'pedidos' %}">Pedidos</a></li>
+				<li><a href="{% url 'landing_page' %}">Home</a></li>
+				<li class="active"><a href="{% url 'pedidos' %}">Pedidos</a></li>
 				<li><a href="{% url 'melhores-clientes' %}">Melhores Clientes</a></li>
 				<li><a href="{% url 'avaliacao-vendedor' %}">Avialiação Vendedor</a></li>
 				<li><a href="#">Relatórios</a></li>
@@ -56,10 +56,9 @@
 
 		<!-- Jumbotron -->
 		<div class="jumbotron">
-			<h1>Bem Vinda, Amy!</h1>
-			<p class="lead">Você já cumpriu as sus metas de hoje? Cuidado para não ser demitida! ;)</p>
-			<p> {{ query__result }}</p>
-			<p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>
+			<div class="row">
+				<h1>Avaliação dos Vendedores</h1>
+			</div>
 		</div>
 
 			<!-- Site footer -->
