@@ -26,3 +26,7 @@ class PedidoForm(forms.Form):
 	enderecofatura = forms.IntegerField(label='Endereço de Fatura', required=False)
 	enderecoentrega = forms.IntegerField(label='Endereço de Entrega', required=False)
 	codigotransportadora = forms.IntegerField(label='Código da Transportadora', required=False)
+
+class DataRangeForm(forms.Form):
+	dtinicio = forms.DateTimeField(label='Data Inicial', required=False, widget=DateTimePicker(options={"format": "YYYY-MM-DD", "pickTime": True}))
+	dtfim = forms.DateTimeField(label='Data Final', required=False, widget=DateTimePicker(options={"format": "YYYY-MM-DD", "pickTime": True}))

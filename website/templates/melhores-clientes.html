@@ -47,7 +47,7 @@
 				<li><a href="{% url 'landing_page' %}">Home</a></li>
 				<li class="active"><a href="{% url 'pedidos' %}">Pedidos</a></li>
 				<li><a href="{% url 'melhores-clientes' %}">Melhores Clientes</a></li>
-				<li><a href="{% url 'avaliacao-vendedor' %}">Avialiação Vendedor</a></li>
+				<li><a href="{% url 'avaliacao-vendedor' %}">Avaliação Vendedor</a></li>
 				<li><a href="#">Relatórios</a></li>
 				<li><a href="#">Vendas</a></li>
 			</ul>
@@ -59,6 +59,20 @@
 			<div class="row">
 				<h1>Melhores Clientes</h1>
 			</div>
+			<ul>
+				{% for c in melhores_clientes %}
+				<div class="row panel">
+					<li style="list-style-type: none;">
+						<div class="col-sm-6">
+							{{ c.nome }}
+						</div>
+						<div class="col-sm-6">
+							{{ c.qtd }}
+						</div>
+					</li>
+				</div>
+				{% endfor %}
+			</ul>
 		</div>
 
 			<!-- Site footer -->

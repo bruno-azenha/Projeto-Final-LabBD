@@ -47,7 +47,7 @@
 				<li><a href="{% url 'landing_page' %}">Home</a></li>
 				<li class="active"><a href="{% url 'pedidos' %}">Pedidos</a></li>
 				<li><a href="{% url 'melhores-clientes' %}">Melhores Clientes</a></li>
-				<li><a href="{% url 'avaliacao-vendedor' %}">Avialiação Vendedor</a></li>
+				<li><a href="{% url 'avaliacao-vendedor' %}">Avaliação Vendedor</a></li>
 				<li><a href="#">Relatórios</a></li>
 				<li><a href="#">Vendas</a></li>
 			</ul>
@@ -58,6 +58,41 @@
 		<div class="jumbotron">
 			<div class="row">
 				<h1>Avaliação dos Vendedores</h1>
+			</div>
+			<div class="row">
+				{% load bootstrap %}
+				<form action="{% url 'avaliacao-vendedor' %}" method="POST">
+				{% csrf_token %}
+				<div class="col-sm-6">
+					{{ form.dtinicio|bootstrap }}
+				</div>
+				<div class="col-sm-6">
+					{{ form.dtfim|bootstrap }}
+				</div>
+				
+				<div class="col-sm-12">
+					<input class="btn btn-lg btn-primary" type="submit" value="Vai!"/>
+				</div>
+			</div>
+				<ul>
+				{% for v in vendedores_list %}
+				<div class="row panel">
+					<li style="list-style-type: none;">
+						<div class="col-sm-4">
+							{{ v.nome }}
+						</div>
+						<div class="col-sm-4">
+							{{ v.cota }}
+						</div>
+						<div class="col-sm-4">
+							{{ v.total_vendas }}
+						</div>
+					</li>
+				</div>
+				{% endfor %}
+			</ul>
+			<div class="row">
+
 			</div>
 		</div>
 

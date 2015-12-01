@@ -284,13 +284,84 @@ def Fail(request):
 	)
 
 def MelhoresClientes(request):
+
+	query = """	SELECT DISTINCT ( PRIMEIRONOME || ' ' || NOMEDOMEIO || ' ' || SOBRENOME ) as cliente, COUNT(P.codigo) "qtde"
+				FROM Cliente C 
+					INNER JOIN Pedido P  
+					  ON C.codigo = P.codigocliente
+				GROUP BY C.primeironome, C.nomedomeio, C.sobrenome 
+					HAVING COUNT(P.codigo) >= 15
+				ORDER BY COUNT(P.codigo) DESC"""
+
+	clientes = executeQuery(query, True)
+	melhores_clientes = []
+	for c in clientes:
+		c_nome = c[0]
+		c_qtd = c[1]
+
+		melhores_clientes.append({"nome": c_nome, "qtd": c_qtd})
+
+	print(melhores_clientes)
+
 	return render_to_response(
-		'melhores-clientes.html', {},
+		'melhores-clientes.html', {'melhores_clientes': melhores_clientes},
 		context_instance=RequestContext(request)
 	)
 
 def AvaliacaoVendedor(request):
-	return render_to_response(
-		'avaliacao-vendedor.html', {},
-		context_instance=RequestContext(request)
-	)
+	if request.method == 'GET':
+
+		form = DataRangeForm()
+
+		return render_to_response(
+		'avaliacao-vendedor.html', {'form': form},
+		context_instance=RequestContext(request))
+	
+	else:
+		form = DataRangeForm(request.POST)
+
+		if form.is_valid():
+			dtinicio = "('{:%Y-%m-%d}', 'YYYY-MM-DD')".format(form.cleaned_data['dtinicio'])
+			dtfim = "('{:%Y-%m-%d}', 'YYYY-MM-DD')".format(form.cleaned_data['dtfim'])
+			print(dtinicio)
+
+			query = """SELECT 
+						SUM(D.PRECOUNITARIO*D.QUANTIDADE-D.DESCONTO) AS TOTAL,
+						(V.PRIMEIRONOME || ' ' || V.NOMEDOMEIO || ' ' || V.SOBRENOME) AS NOME, V.QUOTA
+						FROM DETALHESPEDIDO D
+							JOIN PEDIDO P ON D.CODIGOPEDIDO = P.CODIGO 
+								AND P.DTPEDIDO BETWEEN TO_DATE {0}
+								AND TO_DATE {1}
+							JOIN VENDEDOR V ON P.CODIGOVENDEDOR = V.CODIGO
+						HAVING SUM(D.PRECOUNITARIO*D.QUANTIDADE-D.DESCONTO) >= V.QUOTA 
+						GROUP BY 
+							V.CODIGO, 
+							(V.PRIMEIRONOME || ' ' || V.NOMEDOMEIO || ' ' || V.SOBRENOME), 
+							V.QUOTA;""".format(dtinicio, dtfim)
+
+			print(query)
+
+			vendedores = executeQuery(query, True)
+			print (vendedores)
+
+			vendedores_list = []
+			for v in vendedores:
+				v_totalVendas = v[0]
+				v_nome = v[1]
+				v_cota = v[2]
+				print (v_nome)
+				vendedores_list.append({"nome": v_nome, "cota": v_cota, "total_vendas": v_totalVendas})
+
+
+			return render_to_response(
+				'avaliacao-vendedor.html', {'vendedores_list': vendedores_list, 'form': form},
+				context_instance=RequestContext(request))
+		else:
+			return render_to_response(
+				'fail.html', {},
+				context_instance=RequestContext(request))
+
+
+
+
+	
